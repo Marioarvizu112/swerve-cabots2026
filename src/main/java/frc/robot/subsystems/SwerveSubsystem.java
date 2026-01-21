@@ -35,7 +35,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public SwerveSubsystem() {
-    
+    SwerveDriveTelemetry.verbosity=TelemetryVerbosity.HIGH;
        try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.maxspeed, new Pose2d(new Translation2d(Meter.of(1),
