@@ -35,31 +35,33 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-  
-
-
-
-  
-
-    // This method will be called once per scheduler run
-  
-    
+    // This method will be called once per scheduler
     // Configure the trigger bindings
     configureBindings();
 
     drivebase.setDefaultCommand(drivefieldOrientedDirectAngule);
 
   }
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> m_driverController.getLeftX() * -1,
-                                                                () -> m_driverController.getLeftX() * -1)
-                                                            .withControllerRotationAxis(m_driverController::getLeftX)
-                                                            .deadband(OperatorConstants.deadband)
-                                                            .scaleTranslation(0.8)
-                                                            .allianceRelativeControl(true);
-                                                            SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(m_driverController::getRightY,
-                                                                                             m_driverController::getRightY)
-                                                           .headingWhile(true);
+ SwerveInputStream driveAngularVelocity =
+    SwerveInputStream.of(
+        drivebase.getSwerveDrive(),
+        () -> -m_driverController.getLeftY()/0.5, // Adelante / atrás / Cambiar depende la velocidad que se requiera
+        () ->  m_driverController.getLeftX() /0.8// Izquierda / derecha
+    )
+    .withControllerRotationAxis(m_driverController::getRightX) // ROTACIÓN correcta
+    .deadband(OperatorConstants.deadband)
+
+    .scaleTranslation(0.8)
+    .allianceRelativeControl(true);//NO cambiar 
+
+
+SwerveInputStream driveDirectAngle =
+    driveAngularVelocity.copy()
+        .withControllerHeadingAxis(
+            m_driverController::getRightX, // Heading X
+            m_driverController::getRightY  // Heading Y
+        )
+        .headingWhile(true);
 
    Command drivefieldOrientedDirectAngule = drivebase.driveFieldOriented(driveDirectAngle); 
    Command drivefieldOrientedDirectVelocity = drivebase.driveFieldOriented(driveAngularVelocity);   
