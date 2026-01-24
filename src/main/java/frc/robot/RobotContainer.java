@@ -84,11 +84,7 @@ SwerveInputStream driveDirectAngle =
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-        kk
-          
-
- 
-
+    m_driverController.a().whileTrue(new InstantCommand(drivebase::lock, drivebase));
   }
 
   /**
