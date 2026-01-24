@@ -92,6 +92,10 @@ public class SwerveSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
+  public void lock() {
+    swerveDrive.lockPose();
+  }
+
   public SwerveDrive getSwerveDrive() {
     return swerveDrive ;
   }
